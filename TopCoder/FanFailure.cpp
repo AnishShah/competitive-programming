@@ -17,13 +17,20 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-
 using namespace std;
 typedef vector<int> vi;
 #define sz(c) (int)(c).size()
 #define pb push_back
 #define all(c) (c).begin(), (c).end()
 
+/* SRM 195 DIV 2 500 Problem
+ * 
+ * To determine MFS - find the smallest `N` fans which are a valid
+ * failure set, but the smallest `N+1` are not.
+ *
+ * To determine MFC - you can repeat the MFS algorithm but use the 
+ * largest fans instead of the smallest fans.
+ */
 class FanFailure {
 public:
 	vector <int> getRange(vector <int> capacities, int minCooling) {
