@@ -26,6 +26,13 @@ using namespace std;
 #define FORD(i, a, b) for(int i = (a); i >= (b); i--)
 
 
+/* SRM 200 DIV 2 500 Problem
+ * 
+ * First, iterate through each column and count the number 
+ * of 'X' and '.', and rearrange the column accordingly. 
+ * After that, keep removing last row if it has 'X' in all
+ * column. 
+ */
 class GravityBomb {
 public:
 	vector <string> aftermath(vector <string> board) {
