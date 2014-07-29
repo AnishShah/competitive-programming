@@ -38,28 +38,27 @@ typedef vector<vi> vvi;
 #define SETALL(S, j) (S = (1 << j)-1)
 #define UNSET(S, j) (S &= ~(1 << j))
 #define TOGGLE(S, j) (S ^= (1 << j))
+#define modulo 1000000007
 template<class T>string tostring(T t){stringstream s;s<<t;return s.str();}
 
+string toPost(string pre, string in){
+    if(sz(pre)<=1){
+        return pre;
+    }
+    char root = pre[0];
+    string right = toPost(pre.substr(1+sz(in.substr(0, in.find(root)))), in.substr(in.find(root)+1));
+    string left = toPost(pre.substr(1, sz(in.substr(0, in.find(root)))), in.substr(0, in.find(root)));
+    return left + right + root;
+}
+
 int main(){
-    int n, m;
-    cin >> n >> m;
-    queue<pair<int, int> > children;
-    REP(i, n){
-        int choco;
-        cin >> choco;
-        children.push(mp(i, choco));
+    int T;
+    cin >> T;
+    while(T--){
+        string pre, in;
+        int size;
+        cin >> size >> pre >> in;
+        cout << toPost(pre, in) << endl;
     }
-    int index = -1;
-    while(!children.empty()){
-        pair<int, int> child = children.front();
-        children.pop();
-        if(child.second > m){
-            child.second -= m;
-            children.push(child);
-        }else{
-            index = child.first;
-        }
-    }
-    cout << index+1 << endl;
     return 0;
 }
