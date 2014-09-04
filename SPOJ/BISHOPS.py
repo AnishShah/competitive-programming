@@ -1,13 +1,7 @@
-import io
-if __name__ == '__main__':
-	while True:
-		try:
-			n = io.readline()
-		except EOFError:
-			break
-		n = int(n)
-		num = (n+1)/2
-		if n % 2 == 0:
-			print num*(num+1)
-		else:
-			print num**2
+import sys
+for n in sys.stdin.readlines():
+	n = int(n)
+	if n == 1:
+		print 1
+	else:
+		print 2*(n-1)
