@@ -52,8 +52,12 @@ int main(){
 		 	int i = 0;
 		 	bool ok = true;
 		 	while(i < sz(variable)){
-		 		if(variable[i] == '_'){}
-		 		else if(isupper(variable[i])){
+		 		if(variable[i] == '_'){
+		 			if(i > 0 && variable[i-1] == '_'){
+		 				ok = false;
+		 				break;
+		 			}
+		 		}else if(isupper(variable[i])){
 		 			ok = false;
 		 			break;
 		 		}else if(i > 0 && variable[i-1] == '_'){

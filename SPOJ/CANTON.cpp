@@ -19,6 +19,7 @@
 #include <cstring>
 #include <ctime>
 #include <limits.h>
+
 using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
@@ -41,63 +42,21 @@ typedef vector<vi> vvi;
 #define TOGGLE(S, j) (S ^= (1 << j))
 #define modulo 1000000007
 template<class T>string tostring(T t){stringstream s;s<<t;return s.str();}
-const int MAXN = 10000;
-const int INF = 1e9;
-
-struct node{
-    int y, w;
-    node(){}
-    node(int _y, int _w):y(_y), w(_w){}
-};
-
-vector<node> adj[MAXN];
-bool intree[MAXN];
-int dist[MAXN];
-int N;
-
-vector<int> bfs(int src){
-    fill(intree, intree+N, false);
-    fill(dist, dist+N, 0);
-    dist[src] = 0;
-    int u = src;
-    queue<int> Q;
-    Q.push(src);
-    while(!Q.empty()){
-        int u = Q.front();
-        Q.pop();
-        intree[u] = true;
-        REP(i, sz(adj[u])){
-            int v = adj[u][i].y;
-            if(!intree[v]){
-                dist[v] = dist[u]+1;
-                Q.push(v);
-            }
-        }
-    }
-    int m = 0, mindex = 0;
-    REP(i, N){
-        if(dist[i] > m){
-            m = dist[i];
-            mindex = i;
-        }
-    }
-    vi ans;
-    ans.pb(mindex);
-    ans.pb(m);
-    return ans;
-}
 
 int main(){
-    cin >> N;
-    REP(i, N-1){
-        int X, Y;
-        cin >> X >> Y;
-        X--, Y--;
-        adj[X].pb(node(Y, 1));
-        adj[Y].pb(node(X, 1));
+    int T;
+    cin >> T;
+    while(T--) {
+        int N;
+        cin >> N;
+        int diag = ceil((ceil(sqrt(1 + 8*N)) - 1) / 2.0);
+        int diff = N - diag*(diag - 1)/2;
+        int a = abs(diag - diff+1), b = diff;
+        cout << "TERM " << N << " IS ";
+        if( diag % 2 == 1){
+            cout << a << "/" << b << endl;
+        }else{
+            cout << b << "/" << a << endl;
+        }
     }
-    vector<int> index = bfs(0);
-    vector<int> answer = bfs(index[0]);
-    cout << answer[1] << endl;
 }
-
