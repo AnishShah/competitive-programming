@@ -1,0 +1,106 @@
+// calculate power ==> (base^exponent) % mod
+#define modulo 1000000007
+LL power(LL base, LL exponent, int mod = modulo)
+{
+    LL res = 1;
+    while ( exponent > 0 ) {
+        if ( exponent&1 ) res = (res*base)%mod;
+        base = (base*base)%mod;
+        exponent >>= 1;
+    }
+    return res;
+}
+
+// sieve of eratosthenes to find prime numbers between a range
+int n = 1000001;
+vector<bool> prime(n, true);
+prime[0] = prime[1] = false;
+for(int i = 2; i*i <= n; i++){
+    if(prime[i]){
+    	for(int j = i*i; j < n; j+=i){
+	    prime[j] = false;
+    	}
+    }
+}
+
+
+// dijkstra's algo
+const int MAXN = 500;
+const LL INF = 1e18;
+
+int adj[MAXN][MAXN];
+bool intree[MAXN];
+LL dist[MAXN];
+int N, E;
+
+int dijkstra(int src, int dest){
+    fill(intree, intree+N, false);
+    fill(dist, dist+N, INT_MAX);
+    dist[src] = 0;
+    int u = src;
+    while(!intree[u]){
+        intree[u] = true;
+        REP(i, N){
+            if(adj[u][i]){
+                int v = i;
+                int w = adj[u][i];
+                int iw = adj[i][u];
+                if(iw){
+                    if(dist[v] > dist[u]){
+                        dist[v] = dist[u];
+                    }
+                }else{
+                    if(dist[v] > dist[u]+w){
+                        dist[v] = dist[u] + w;
+                    }
+                }
+            }
+        }
+        int v = 1, distance = INT_MAX;
+        REP(i, N){
+            if(!intree[i] && (distance > dist[i])){
+                distance = dist[i];
+                v = i;
+            }
+        }
+        u = v;
+    }
+    return dist[dest];
+}
+
+
+//Prim's algo for minimum spanning tree
+struct node{
+    int y, w;
+    node(){}
+    node(int _y, int _w):y(_y), w(_w){}
+    inline bool operator < (const node& that) const {return w > that.w;}
+};
+
+vector<node> adj[MAXN];
+int m, n;
+bool intree[MAXN];
+LL dist[MAXN];
+
+LL primMST(){
+    fill(intree, intree+m, false);
+    priority_queue<node> Q;
+    Q.push(node(0, 0));
+    int total = 0;
+    LL tcost = 0;
+    while(total < m){
+        node item = Q.top(); Q.pop();
+        if(intree[item.y]) continue;
+
+        intree[item.y] = true;
+        tcost += item.w;
+        total++;
+
+        REP(i, sz(adj[item.y])){
+            if(!intree[adj[item.y][i].y]){
+                Q.push(adj[item.y][i]);
+            }
+        }
+    }
+    return tcost;
+}

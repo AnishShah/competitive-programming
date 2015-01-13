@@ -54,17 +54,6 @@ data query(int v, int l, int r, int x, int y){
 		);
 }
 
-void update(int v, int l, int r, int pos, int new_val){
-	if(l == r)
-		tree[v] = make_data(new_val);
-	else{
-		int mid = (l+r)/2;
-		if(pos <= mid) update(2*v, l, mid, pos, new_val);
-		else update(2*v+1, mid+1, r, pos, new_val);
-		tree[v] = combine(tree[2*v], tree[2*v+1]);
-	}
-}
-
 int main(){
 	int M;
 	scanf("%d", &N);
@@ -72,10 +61,9 @@ int main(){
 	build(1, 0, N-1);
 	scanf("%d", &M);
 	REP(i, M){
-		int c, x, y;
-		scanf("%d %d %d", &c, &x, &y);
-		if(c) printf("%lld\n", query(1, 1, N, x, y).ans);
-		else update(1, 1, N, x, y);
+		int x, y;
+		scanf("%d %d", &x, &y);
+		printf("%lld\n", query(1, 1, N, x, y).ans);
 	}
 	return 0;
 }
